@@ -1,8 +1,9 @@
 package com.lucifer.mnafix;
 
+import com.mna.recipes.ItemAndPatternRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.crafting.RecipeManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,13 +21,15 @@ public class SpellCache {
         return CACHE.get(id);
     }
 
-    public static void buildAsync(Level level) {
+    public static void buildAsync(RecipeManager rm) {
         ready = false;
 
         CompletableFuture.runAsync(() -> {
             Map<ResourceLocation, Recipe<?>> temp = new HashMap<>();
-            for (Recipe<?> r : level.getRecipeManager().getRecipes()) {
-                temp.put(r.getId(), r);
+            for (Recipe<?> r : rm.getRecipes()) {
+                if (r instanceof ItemAndPatternRecipe pattern) {
+                    temp.put(pattern.getId(), pattern);
+                }
             }
             CACHE.clear();
             CACHE.putAll(temp);

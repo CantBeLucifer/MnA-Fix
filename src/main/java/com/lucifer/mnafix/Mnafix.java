@@ -3,6 +3,7 @@ package com.lucifer.mnafix;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RecipesUpdatedEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,7 +29,7 @@ public class Mnafix {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        LOGGER.info("[[MNAFIX IS LOADED]]");
+        LOGGER.info("MnAFix Loaded");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -36,8 +37,9 @@ public class Mnafix {
     public static class ClientModEvents {
 
         @SubscribeEvent
-        public static void onWorldLoad(LevelEvent.Load e) {
-            SpellCache.buildAsync((ClientLevel)e.getLevel());
+        public static void onRecipesUpdated(RecipesUpdatedEvent e) {
+            LOGGER.info("MnAFix building recipe cache");
+            SpellCache.buildAsync(e.getRecipeManager());
         }
     }
 }
