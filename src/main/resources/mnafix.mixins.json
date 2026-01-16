@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.lucifer.mnafix.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mnafix.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+    "AbstractSelectionListAccessor",
+    "SpellPartListMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
